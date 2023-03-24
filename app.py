@@ -8,6 +8,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 sensors_ids = ["01", "02", "03", "04", "05"]
+url_for_csv_data = "/home/jdelossantos/flask-esp32/data/"
 
 @app.route("/")
 def index():
@@ -19,11 +20,11 @@ def dashboard():
     return render_template("dashboard.html", sensors_info=zip(sensors_ids, sensors_values))
 
 def get_last_read(sensor_id):
-    df = pd.read_csv(f"data/{sensor_id}.csv")
+    df = pd.read_csv(f"{url_for_csv_data}{sensor_id}.csv")
     return df.iloc[-1,0]
 
 def get_last_nreads(sensor_id, n):
-    df = pd.read_csv(f"data/{sensor_id}.csv")
+    df = pd.read_csv(f"{url_for_csv_data}{sensor_id}.csv")
     return list(df.iloc[-1:-n:-1,0])
 
 @app.route("/sensor/<sensor_id>")
@@ -42,7 +43,7 @@ def sensor_data():
     sensor_id = data["sensor_id"] # obtener los datos enviados por el ESP32 en formato JSON
     sensor_value = data["sensor_value"]
     # procesar los datos y almacenarlos en una base de datos o en una variable global
-    with open(f"data/{sensor_id}.csv", 'a') as f:
+    with open(f"{url_for_csv_data}{sensor_id}.csv", 'a') as f:
         f.write(str(sensor_value)+"\n")
     last_reads = get_last_nreads(sensor_id, 10)
     to_send = {"sensor_id":sensor_id,"sensor_value": sensor_value, "last_reads": last_reads}
