@@ -41,7 +41,7 @@ def get_last_nreads(sensor_id, n):
 @app.route("/sensor/<sensor_id>")
 def sensor(sensor_id):
     sensor_value = get_last_read(sensor_id)
-    last_reads = get_last_nreads(sensor_id, 10)
+    last_reads = get_last_nreads(sensor_id, 20)
     return render_template("sensor.html", sensor_id=sensor_id, sensor_value=sensor_value, last_reads=last_reads)
 
 @app.route('/sensor-data', methods=['POST'])

@@ -21,6 +21,6 @@
 {% endblock  %}
 
 {% block content %}
-<div id="chart-gauge-{{sensor_id}}"></div>
-<div id="chart-line-{{sensor_id}}"></div>
+<div id="chart-gauge-{{sensor_id | int}}"></div>
+<div id="chart-line-{{sensor_id | int}}"></div>
 {% endblock  %}
