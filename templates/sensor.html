@@ -11,6 +11,7 @@
 <script type="text/javascript">
     var sensor_value = {{sensor_value}};
     var last_reads = {{last_reads}};
+    var sensor_id = {{sensor_id}}; 
 </script>
 <script src="{{ url_for('static', filename='js/sensorcharts.js') }}" defer></script>
 {% endblock  %}
@@ -20,6 +21,6 @@
 {% endblock  %}
 
 {% block content %}
-<div id="chart-gauge"></div>
-<div id="chart-line"></div>
+<div id="chart-gauge-{{sensor_id}}"></div>
+<div id="chart-line-{{sensor_id}}"></div>
 {% endblock  %}

@@ -12,9 +12,10 @@ socket.on('updateChart', function(data) {
     x: Array.from(Array(data["last_reads"].length).keys()),
     y: data["last_reads"],
   }
-
-  Plotly.update('chart-gauge', new_data_gauge);
-  Plotly.react('chart-line', [new_data_line]);
+  if (sensor_id == parseInt(data["sensor_id"]) ){
+    Plotly.update('chart-gauge-0'+sensor_id, new_data_gauge);
+    Plotly.react('chart-line-0'+sensor_id, [new_data_line]);
+  }
 });
 
 function plotGauge() {
@@ -40,7 +41,7 @@ function plotGauge() {
   
   var layout = {font: {size: 12}};
   var config = {resposive: true};
-  Plotly.newPlot('chart-gauge', data, layout, config);
+  Plotly.newPlot('chart-gauge-0'+sensor_id, data, layout, config);
 }
   
 function plotLine() {
@@ -55,5 +56,5 @@ function plotLine() {
     yaxis: {title:"Temperature °C"},
   }
   
-  Plotly.newPlot('chart-line', [data], layout, {responsive: true});
+  Plotly.newPlot('chart-line-0'+sensor_id, [data], layout, {responsive: true});
 }
